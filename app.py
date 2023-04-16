@@ -1,8 +1,10 @@
 import pickle
 from flask import Flask, jsonify, request
 import numpy as np
+import sklearn
 
 model = pickle.load(open('model1.pkl', 'rb'))
+
 
 app = Flask(__name__)
 
