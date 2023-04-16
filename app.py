@@ -1,6 +1,7 @@
-import pickle
+import pickle,scipy
 from flask import Flask, jsonify, request
 import numpy as np
+import joblib
 
 model = pickle.load(open('model1.pkl', 'rb'))
 
@@ -30,7 +31,7 @@ def predict():
     thal = request.form.get('thal')
     input_query = np.array([[age, sex, cp, trestbps, chol,
                              fbs, restecg, thalach
-                                , exang, oldpeak, slope, ca, thal]], dtype=float)
+                                , exang, oldpeak, slope, ca, thal]])
 
     input_query = input_query.reshape(1,-1)
     result = model.predict(input_query)
