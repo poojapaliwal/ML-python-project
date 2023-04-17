@@ -1,10 +1,9 @@
-import pickle,scipy
+import pickle, scipy
 from flask import Flask, jsonify, request
 import numpy as np
 import joblib
 
 model = pickle.load(open('model1.pkl', 'rb'))
-
 
 app = Flask(__name__)
 
@@ -29,15 +28,17 @@ def predict():
     slope = request.form.get('slope')
     ca = request.form.get('ca')
     thal = request.form.get('thal')
-    input_query = np.array([[age, sex, cp, trestbps, chol,
-                             fbs, restecg, thalach
-                                , exang, oldpeak, slope, ca, thal]])
+    print(type(age))
+    input_query = np.array([[int(age), int(sex), int(cp), int(trestbps), int(chol),
+                             int(fbs), int(restecg), int(thalach)
+                                , int(exang), int(oldpeak), int(slope), int(ca), int(thal)]])
 
-    input_query = input_query.reshape(1,-1)
+    input_query = input_query.reshape(1, -1)
     result = model.predict(input_query)
     final_result = result[0]
 
     return jsonify({'Disease: ': str(final_result)})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
